@@ -35,16 +35,16 @@ void main () {
 
     //Initialize scan struct
     cyBOT_init_Scan(0b0110);
-    cyBOT_SERVO_cal();
-    //right_calibration_value = 280000;
-    //left_calibration_value = 1204000;
-    //cyBOT_Scan_t scan;
+    //cyBOT_SERVO_cal();
+    right_calibration_value = 280000;
+    left_calibration_value = 1204000;
+    cyBOT_Scan_t scan;
 
 
-    //int i;
-    //for (i=0; i <= 180; i+=2){
-    //    cyBOT_Scan(i, &scan);
-    //}
+    int i;
+    for (i=0; i <= 180; i+=2){
+        cyBOT_Scan(i, &scan);
+    }
 
 
    //turn off for charging
