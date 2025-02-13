@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Lab2/LCD_RotatingBanner.c&apos; to &apos;main.c&apos;" description="Rename resource &apos;LCD_RotatingBanner.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="LCD_RotatingBanner.c" name="main.c" stamp="1738859723885" updateReferences="true"/>
+</session>
