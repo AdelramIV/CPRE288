@@ -14,10 +14,10 @@
 #include "cyBot_uart.h"
 #include "stdio.h"
 
-void sendString (char x) {
+void sendString (int angle, float distance) {
     int i;
     char buffer[50];
-    sprintf(buffer, "%c was sent \n", x);
+    sprintf(buffer, "%d: Distance: %f \n\r", angle, distance);
     for (i = 0; i < strlen(buffer) - 1; i++){
         cyBot_sendByte(buffer[i]);
     }
@@ -31,20 +31,28 @@ void main () {
     timer_init();   //Initialize timer for the LCD screen
     lcd_init();   // Initialize the LCD screen.  This also clears the screen.
 
-    //cyBot_uart_init(); //Initialize UART communication
+    cyBot_uart_init(); //Initialize UART communication
 
     //Initialize scan struct
-    cyBOT_init_Scan(0b0110);
-    cyBOT_SERVO_cal();
-    //right_calibration_value = 280000;
-    //left_calibration_value = 1204000;
-    //cyBOT_Scan_t scan;
+    cyBOT_init_Scan(0b0111);
+    //cyBOT_SERVO_cal();
+    right_calibration_value = 280000;
+    left_calibration_value = 1209250;
+    cyBOT_Scan_t scan;
 
+    char myChar = ' ';
+    int i;
 
-    //int i;
-    //for (i=0; i <= 180; i+=2){
-    //    cyBOT_Scan(i, &scan);
-    //}
+    while(myChar != 'm'){
+        myChar = cyBot_getByte();
+    }
+
+    for(i = 45; i <= 135; i+=3){
+        cyBOT_Scan(i, &scan);
+        float distance = scan.sound_dist;
+        sendString(i , distance);
+    }
+
 
 
    //turn off for charging
