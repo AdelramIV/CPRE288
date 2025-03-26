@@ -37,7 +37,7 @@ int main(void) {
 	//note that command_byte is global shared variable read by the ISR
 	//for example, try using a tab character as a command from PuTTY
 
-	while(1)
+ 	while(1)
 	{
 
       // YOUR CODE HERE
