@@ -10,31 +10,28 @@
 #include "lcd.h"
 #include "timer.h"
 
+const int DEGREE_OFFSET = 20;
+
 double move_forward (oi_t*sensor_data, double distance_mm){
     double sum = 0; // Tracks distance travelled
     oi_setWheels(200,200); // Move forward full speed
 
-    while(sum < distance_mm) { // Checks if travelled 1 meter
-        oi_update(sensor_data);
-        sum += sensor_data -> distance; //pointer notation
-        lcd_printf("%f", sum);
-        if(sensor_data->bumpLeft){
-            oi_setWheels(0,0);
-            collision_backup_left(sensor_data);
-            sum -= 150;
-            oi_setWheels(200,200);
-        }
-        else if(sensor_data->bumpRight){
-            oi_setWheels(0,0);
-            collision_backup_right(sensor_data);
-            sum -= 150;
-            oi_setWheels(200,200);
-        }
+    while(sum < distance_mm) {
+    oi_update(sensor_data);
+    sum += sensor_data -> distance; //pointer notation
+    lcd_printf("%f", sum);
+    if(sensor_data->bumpLeft){
+        oi_setWheels(0,0);
+        collision_backup_left(sensor_data);
+        return sum -= 150;
     }
-
+    else if(sensor_data->bumpRight){
+        oi_setWheels(0,0);
+        collision_backup_right(sensor_data);
+        return sum -= 150;
+    }
+    }
     oi_setWheels(0,0); // stop
-    timer_waitMillis(300);
-
     return sum;
 }
 
@@ -58,7 +55,7 @@ double move_backward (oi_t*sensor_data, double distance_mm){
 double turn_right(oi_t *sensor, double degrees) {
     oi_setWheels(-200, 200);
     double currDegree = 0;
-    while(currDegree * -1 < degrees - 20){
+    while(currDegree * -1 < degrees - DEGREE_OFFSET){
         oi_update(sensor);
         currDegree += sensor -> angle; //pointer notation
         lcd_printf("%f", currDegree);
@@ -74,7 +71,7 @@ double turn_right(oi_t *sensor, double degrees) {
 double turn_left(oi_t *sensor, double degrees) {
     oi_setWheels(200, -200);
     double currDegree = 0;
-    while(currDegree < degrees - 20){
+    while(currDegree < degrees - DEGREE_OFFSET){
         oi_update(sensor);
         currDegree += sensor -> angle;
         lcd_printf("%f", currDegree);
