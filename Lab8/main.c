@@ -34,8 +34,8 @@ int main(void) {
 	uart_init();
 	adc_init();
 	cyBOT_init_Scan(0b0111);
-//	cyBOT_SERVO_cal();
-//	return 0;
+	cyBOT_SERVO_cal();
+	return 0;
     right_calibration_value = 238000;
     left_calibration_value = 1235500;
 
