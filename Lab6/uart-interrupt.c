@@ -14,13 +14,13 @@
 #include <inc/tm4c123gh6pm.h>
 #include <stdint.h>
 #include "uart-interrupt.h"
+#include <string.h>
 
 // These variables are declared as examples for your use in the interrupt handler.
 volatile char command_byte = -1; // byte value for special character used as a command
 volatile int command_flag = 0; // flag to tell the main program a special command was received
 
 void uart_interrupt_init(void){
-	//TODO
   //enable clock to GPIO port B
   SYSCTL_RCGCGPIO_R |= 0x02;
 
@@ -115,7 +115,30 @@ char uart_receive(void){
 }
 
 void uart_sendStr(const char *data){
-	//TODO for reference see lcd_puts from lcd.c file
+    int i;
+    for(i = 0; i < strlen(data); i++ ){
+            uart_sendChar(data[i]);
+    }
+}
+
+char uart_receive_nonBlocking(void){
+    uint32_t ret;
+    char rdata;
+
+    while(1){
+            ret = UART1_DR_R;
+            if(ret & 0xF00){
+                GPIO_PORTB_DATA_R = 0xF;
+            }
+            else if((UART1_FR_R & 0x10) != 0){
+                rdata = (char)(UART1_DR_R & 0xFF);
+            }
+            else{
+                rdata = '\0';
+            }
+            return rdata;
+    }
+
 }
 
 // Interrupt handler for receive interrupts

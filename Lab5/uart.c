@@ -11,6 +11,7 @@
 #include <inc/tm4c123gh6pm.h>
 #include <stdint.h>
 #include "uart.h"
+#include <string.h>
 
 void uart_init(void){
 	//TODO
@@ -89,5 +90,7 @@ char uart_receive(void){
 }
 
 void uart_sendStr(const char *data){
-	//TODO for reference see lcd_puts from lcd.c file
+	for(i = 0; i < strlen(data); i++ ){
+	    uart_sendChar(data[i]);
+	}
 }

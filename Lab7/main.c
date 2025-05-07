@@ -64,7 +64,7 @@ object scanObjects() {
     bool objectExists = false;
 
     //Scan 180 at 2 degrees per tick
-    for(i = 0; i <= 180; i+=2){
+    for(i = 0; i <= 45; i+=1){
 
          //scan multiple times and avg IR value
          for(k = 0; k < 3; k++){
@@ -128,14 +128,14 @@ int main(void) {
 	lcd_init();
 	uart_init();
 	cyBOT_init_Scan(0b0111);
-	oi_t *sensor_data = oi_alloc(); // do this only once at start of main()
-	oi_init(sensor_data); // do this only once at start of main()
-
+//	oi_t *sensor_data = oi_alloc(); // do this only once at start of main()
+//	oi_init(sensor_data); // do this only once at start of main()
+//
 //	cyBOT_SERVO_cal();
 //	return 0;
 
-	right_calibration_value = 253750; //1318-8
-	left_calibration_value = 1219750;
+	right_calibration_value = 290500; //1318-8
+	left_calibration_value = 1261750;
 
 	char myChar = ' ';
 	object smallestObj;
@@ -144,29 +144,29 @@ int main(void) {
 	}
 
 	 smallestObj = scanObjects();
-	 while (smallestObj.dist == 0) { //if no objects exist, move forward
-
-	     move_forward(sensor_data, 250);
-	     smallestObj = scanObjects();
-	 }
-
-	 do {
-         if(smallestObj.midpoint > 100){ //if the smallest obj on the left side
-             turn_left(sensor_data, abs(smallestObj.midpoint - 90));
-             move_forward(sensor_data, (smallestObj.dist * 10) - 250);
-             smallestObj = scanObjects();
-         }
-         else if (smallestObj.midpoint < 80) { //if the smallest obj is on the left side
-             turn_right(sensor_data, abs(smallestObj.midpoint - 90));
-             move_forward(sensor_data, (smallestObj.dist * 10) - 250);
-             smallestObj = scanObjects();
-         }
-         else{ //move forward if it is
-             move_forward(sensor_data, (smallestObj.dist * 10) - 250);
-             smallestObj = scanObjects();
-         }
-	 } while (smallestObj.dist > 20);
-
-	 //turn off for charging
-	 oi_free(sensor_data);
+//	 while (smallestObj.dist == 0) { //if no objects exist, move forward
+//
+//	     move_forward(sensor_data, 250);
+//	     smallestObj = scanObjects();
+//	 }
+//
+//	 do {
+//         if(smallestObj.midpoint > 100){ //if the smallest obj on the left side
+//             turn_left(sensor_data, abs(smallestObj.midpoint - 90));
+//             move_forward(sensor_data, (smallestObj.dist * 10) - 250);
+//             smallestObj = scanObjects();
+//         }
+//         else if (smallestObj.midpoint < 80) { //if the smallest obj is on the left side
+//             turn_right(sensor_data, abs(smallestObj.midpoint - 90));
+//             move_forward(sensor_data, (smallestObj.dist * 10) - 250);
+//             smallestObj = scanObjects();
+//         }
+//         else{ //move forward if it is
+//             move_forward(sensor_data, (smallestObj.dist * 10) - 250);
+//             smallestObj = scanObjects();
+//         }
+//	 } while (smallestObj.dist > 20);
+//
+//	 //turn off for charging
+//	 oi_free(sensor_data);
 }

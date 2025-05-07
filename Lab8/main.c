@@ -34,8 +34,8 @@ int main(void) {
 	uart_init();
 	adc_init();
 	cyBOT_init_Scan(0b0111);
-	cyBOT_SERVO_cal();
-	return 0;
+//	cyBOT_SERVO_cal();
+//	return 0;
     right_calibration_value = 238000;
     left_calibration_value = 1235500;
 
@@ -67,7 +67,8 @@ int main(void) {
 	     i = 0;
 	     IRavg = (IRArray[0] + IRArray[1] +IRArray[2] + IRArray[3] + IRArray[4]) / 5.0;
 
-	     distance = (31856822.642170)*pow(IRavg, -1.924221);
+	     distance = (13974351.2214)*pow(IRavg, -1.4977) / 10; //Cybot 1318-6
+//	     distance = (31856822.642170)*pow(IRavg, -1.924221);
 	     lcd_printf("Sample: %0.3f Distance: %0.3f", IRavg, distance);
 	     myChar = ' ';
 
